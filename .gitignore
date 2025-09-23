@@ -1,0 +1,10 @@
+venv
+.env*
+__pycache__
+*/**/__pycache__/
+*.py[cod]
+*.db
+_backup/
+
+assets/*
+!assets/*.example.json
