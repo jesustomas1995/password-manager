@@ -37,7 +37,7 @@ class MenuController:
         username = input("Usuario: ")
         password = input("Contraseña: ")
         encrypted = self.crypto.encrypt(password)
-        self.storage.data.append({"nombre": name, "usuario": username, "contraseña": encrypted})
+        self.storage.data.append({"tag": name, "user": username, "password": encrypted})
         self.storage.save_data()
         print("✅ Contraseña guardada correctamente!")
 
@@ -46,15 +46,15 @@ class MenuController:
             print("No hay contraseñas guardadas.")
             return
         for idx, entry in enumerate(self.storage.data, 1):
-            print(f"{idx}. {entry['nombre']} ({entry['usuario']})")
+            print(f"{idx}. {entry['tag']} ({entry['user']})")
         choice = input(
             "Ingrese el número para copiar la contraseña al portapapeles (Enter para salir): "
         )
         if choice.isdigit() and 1 <= int(choice) <= len(self.storage.data):
             selected = self.storage.data[int(choice) - 1]
-            password = self.crypto.decrypt(selected['contraseña'])
+            password = self.crypto.decrypt(selected['password'])
             pyperclip.copy(password)
-            print(f"✅ Contraseña de {selected['nombre']} copiada al portapapeles.")
+            print(f"✅ Contraseña de {selected['tag']} copiada al portapapeles.")
             print(f"Se limpiará automáticamente en {self.CLIPBOARD_CLEAR_TIME} segundos...")
             time.sleep(self.CLIPBOARD_CLEAR_TIME)
             pyperclip.copy("")
@@ -65,9 +65,9 @@ class MenuController:
             print("No hay contraseñas para eliminar.")
             return
         for idx, entry in enumerate(self.storage.data, 1):
-            print(f"{idx}. {entry['nombre']} ({entry['usuario']})")
+            print(f"{idx}. {entry['tag']} ({entry['user']})")
         choice = input("Ingrese el número a eliminar (Enter para salir): ")
         if choice.isdigit() and 1 <= int(choice) <= len(self.storage.data):
             removed = self.storage.data.pop(int(choice) - 1)
             self.storage.save_data()
-            print(f"❌ Contraseña de {removed['nombre']} eliminada.")
+            print(f"❌ Contraseña de {removed['tag']} eliminada.")

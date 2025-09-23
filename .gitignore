@@ -8,3 +8,5 @@ _backup/
 
 assets/*
 !assets/*.example.json
+
+.json
