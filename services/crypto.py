@@ -7,7 +7,6 @@ from cryptography.hazmat.backends import default_backend
 
 backend = default_backend()
 
-
 class CryptoService:
     def __init__(self, master_password: str, salt: bytes):
         self.key = self._generate_key(master_password, salt)

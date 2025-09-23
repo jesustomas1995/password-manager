@@ -9,4 +9,5 @@ _backup/
 assets/*
 !assets/*.example.json
 
-.json
+*.json
+salt.bin

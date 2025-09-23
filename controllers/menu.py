@@ -2,6 +2,7 @@ import time
 import pyperclip
 from models.storage import Storage
 from services.crypto import CryptoService
+from utils.copy_to_clipboard import copy_to_clipboard
 
 
 class MenuController:
@@ -53,12 +54,7 @@ class MenuController:
         if choice.isdigit() and 1 <= int(choice) <= len(self.storage.data):
             selected = self.storage.data[int(choice) - 1]
             password = self.crypto.decrypt(selected['password'])
-            pyperclip.copy(password)
-            print(f"✅ Contraseña de {selected['tag']} copiada al portapapeles.")
-            print(f"Se limpiará automáticamente en {self.CLIPBOARD_CLEAR_TIME} segundos...")
-            time.sleep(self.CLIPBOARD_CLEAR_TIME)
-            pyperclip.copy("")
-            print("🧹 Portapapeles limpiado.")
+            copy_to_clipboard(password, selected['tag'], self.CLIPBOARD_CLEAR_TIME)
 
     def delete_password(self):
         if not self.storage.data:
